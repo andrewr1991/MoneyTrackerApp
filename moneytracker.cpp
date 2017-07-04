@@ -10,8 +10,15 @@ stringstream ss;
 
 class User {
 	public:
-		void addFunds();
+		void addFunds(float funds) {
+			totalFunds += funds;
+		}
+		
 		void addEstimate();
+		
+		float funds_toString() {
+			return totalFunds;
+		}
 		
 	private:
 		friend class boost::serialization::access;
@@ -22,7 +29,7 @@ class User {
 			ar& totalSpent;
 		}
 		
-		float totalFunds;
+		float totalFunds = 0;
 		float totalSpent;
 		
 };
@@ -52,7 +59,21 @@ User loadData() {
 }
 
 int main() {
-
+	int choice;
+	
+	cout << "Do you want to enter information";
+	cin >> choice;
+	
+	if (choice == 1) {
+		User user;
+		user.addFunds(102.3);
+		cout << user.funds_toString() << endl;
+		saveData(user);
+		user.addFunds(200.1);
+		cout << user.funds_toString() << endl;
+		user = loadData();
+		cout << user.funds_toString() << endl;
+	}
 	
 	return 0;
 }
